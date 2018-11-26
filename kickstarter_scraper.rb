@@ -6,7 +6,8 @@ def create_project_hash
 
   html = File.read("fixtures/kickstarter.html")
   kickstarter = Nokogiri::HTML(html).css(".project")
-  sorted = kickstarter.each_with_object({}) do |project, info_hash|
+  
+  kickstarter.each_with_object({}) do |project, info_hash|
     info_hash[project.css(".bbcard_name a").text] = {
       :image_link => project.css(".projectphoto-little").attr("src").value,
       :description => project.css(".bbcard_blurb").text.strip,
@@ -14,8 +15,5 @@ def create_project_hash
       :percent_funded => project.css(".funded strong").text.gsub("%", "").to_i
     }
   end
-  # binding.pry
 
 end
-
-create_project_hash
